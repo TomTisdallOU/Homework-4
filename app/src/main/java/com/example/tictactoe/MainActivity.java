@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             }
             players[player] = new Player(playerName, symbol);
 
+            //TODO get phone number, send invite message to opponent
+
 
             //TODO setup second activity
             if(player == 0){

@@ -16,6 +16,7 @@ public class player_form extends AppCompatActivity {
     String[] spinnerSymbolNames;
     int[] spinnerImages;
     Spinner spinner = null;
+    EditText phoneNumber = null;
     Button nextButton = null;
 
     @Override
@@ -27,6 +28,7 @@ public class player_form extends AppCompatActivity {
         playerNumber = findViewById(R.id.playerNumber);
         nameText = findViewById(R.id.nameText);
         spinner = findViewById(R.id.spinner);
+        phoneNumber = findViewById(R.id.phoneNumber);
         nextButton = findViewById(R.id.nextButton);
 
         String title = null;
@@ -65,6 +67,7 @@ public class player_form extends AppCompatActivity {
                 intent.putExtra("PlayerName", playerName);
                 intent.putExtra("SymbolNumber", image);
                 intent.putExtra("Title", playerNumber.getText().toString());
+                intent.putExtra("PhoneNumber",phoneNumber.getText().toString());
                 setResult(Activity.RESULT_OK, intent);
                 finish();
 
