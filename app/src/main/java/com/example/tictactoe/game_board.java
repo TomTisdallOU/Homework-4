@@ -105,6 +105,12 @@ public class game_board extends AppCompatActivity {
                 int i = myButton.getButtonPosition();
                 players[currentPlayer].MarkCell(i);
                 tttButton[i].setButtonImage(players[currentPlayer].getSymbol());
+
+                //String phoneNumber = phoneNumberText.getText().toString();
+                //String message = "TTTGame,MOVE," + Integer.toString(i);
+                //smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+
+
                 if (players[currentPlayer].winner()) {
                     turnLabel.setText(players[currentPlayer].getName() + " Wins!");
                     startOver.setVisibility(View.VISIBLE);
