@@ -13,14 +13,14 @@ import android.telephony.SmsMessage;
 
 public class SMSReceiver extends BroadcastReceiver
 {
-    game_board activity = null;
+    Context activity = null;
     final IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
     SmsManager smsManager = SmsManager.getDefault();
     String senderNum = null;
 
 
     public SMSReceiver(Context context) {
-        activity = (game_board) context;
+        activity = context;
         context.registerReceiver(this, intentFilter);
     }
 
@@ -35,13 +35,14 @@ public class SMSReceiver extends BroadcastReceiver
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
-                        String acceptedMessage = "TTTGame,ACCEPTED," + activity.players[1].getName();
+                        String acceptedMessage = "TTTGame,ACCEPTED," + ((game_board)activity).players[1].getName();
                         smsManager.sendTextMessage(senderNum, null, acceptedMessage, null, null);
+                        // Go to game_board screen
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
                         //No button clicked
-                        String deniedMessage = "TTTGame,DENIED," + activity.players[1].getName();
+                        String deniedMessage = "TTTGame,DENIED," + ((game_board)activity).players[1].getName();
                         smsManager.sendTextMessage(senderNum, null, deniedMessage, null, null);
                         break;
                 }
@@ -72,7 +73,7 @@ public class SMSReceiver extends BroadcastReceiver
                         // TODO: This context passed in is the game_board. I'm not sure how to pass in the right context. Because the
                         // TODO: dialog message doesn't show
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setMessage("You are invited by " + activity.players[0].getName() + " to play Tic Tac Toe game. Do you accept this invitation?").setPositiveButton("Yes", dialogClickListener)
+                        builder.setMessage("You are invited by " + ((game_board)activity).players[0].getName() + " to play Tic Tac Toe game. Do you accept this invitation?").setPositiveButton("Yes", dialogClickListener)
                                 .setNegativeButton("No", dialogClickListener).show();
                         break;
                     case "ACCEPTED":
