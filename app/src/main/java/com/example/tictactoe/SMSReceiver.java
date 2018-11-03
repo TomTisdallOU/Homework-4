@@ -14,7 +14,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
 
     public SMSReceiver(Context context) {
-        activity = (game_board) context;
+      //  activity = (game_board) context;
         context.registerReceiver(this, intentFilter);
     }
 

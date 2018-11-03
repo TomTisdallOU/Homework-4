@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     SmsManager smsManager = SmsManager.getDefault();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SMSReceiver smsReceiver = new SMSReceiver(this);
+
 
         playerButton = findViewById(R.id.startButton);
 
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
 
     }
@@ -88,9 +90,7 @@ public class MainActivity extends AppCompatActivity {
             String message = "%$$^ | TTTGame | INVITE | " + players[0].getName();
             smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 
-            SMSReceiver smsReceiver = new SMSReceiver(this);
-            if(!isSMSPermissionGranted())
-                requestReadandSendSMSPermission();
+
 
 
 
