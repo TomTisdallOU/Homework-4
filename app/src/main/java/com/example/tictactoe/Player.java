@@ -7,6 +7,7 @@ public class Player {
     private String name;
     private DataCell[] cells = new DataCell[9];
     private int symbol;
+    private String phoneNumber;
 
 
     //TODO -- Determine the winner here.
@@ -28,11 +29,13 @@ public class Player {
     public Player(){
         this.name = "";
         this.symbol = 0;
+        this.phoneNumber = "";
     }
 
-    public Player(String name, int symbol){
+    public Player(String name, int symbol, String phoneNumber){
         this.name = name;
         this.symbol = symbol;
+        this.phoneNumber = phoneNumber;
         for (int i = 0; i < 9; i++) {
             cells[i] = new DataCell();
         }
@@ -58,6 +61,10 @@ public class Player {
     public String getName() {return name;}
     public void setName(String name) {
         this.name = name;
+    }
+    public String getPhoneNumber() {return phoneNumber;}
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     public DataCell[] getCells(){
         return cells;

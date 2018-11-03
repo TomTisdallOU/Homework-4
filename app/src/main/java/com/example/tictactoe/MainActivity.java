@@ -59,13 +59,14 @@ public class MainActivity extends AppCompatActivity {
             String playerNumber = data.getStringExtra("Title");
             String playerName = data.getStringExtra("PlayerName");
             int symbol = data.getIntExtra("SymbolNumber",0);
+            String playerPhoneNumber = data.getStringExtra("PhoneNumber");
             int player= 0;
             if(playerNumber.equals("Player 1")){
                player = 0;
             }else{
                 player = 1;
             }
-            players[player] = new Player(playerName, symbol);
+            players[player] = new Player(playerName, symbol, playerPhoneNumber);
 
             //TODO get phone number, send invite message to opponent
 
@@ -83,8 +84,11 @@ public class MainActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("Player 1 Name", players[0].getName());
                 intent.putExtra("Player 1 Symbol",players[0].getSymbol());
+                intent.putExtra("Player 1 Phone Number", players[0].getPhoneNumber());
                 intent.putExtra("Player 2 Name", players[1].getName());
                 intent.putExtra("Player 2 Symbol",players[1].getSymbol());
+                intent.putExtra("Player 2 Phone Number", players[1].getPhoneNumber());
+
 
                 startActivityForResult(intent, 1);
             }

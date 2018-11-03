@@ -3,6 +3,7 @@ package com.example.tictactoe;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ public class game_board extends AppCompatActivity {
     Button startOver = null;
     Button cancel = null;
     Button start = null;
+    SmsManager smsManager = SmsManager.getDefault();
+
 
     private static final int[] BUTTON_IDS = {
             R.id.TTTButton1,
@@ -40,8 +43,8 @@ public class game_board extends AppCompatActivity {
             if(extras == null) {
                 //title= null;
             } else {
-                players[0] = new Player(extras.getString("Player 1 Name"), extras.getInt("Player 1 Symbol",0));
-                players[1] = new Player(extras.getString("Player 2 Name"), extras.getInt("Player 2 Symbol",0));
+                players[0] = new Player(extras.getString("Player 1 Name"), extras.getInt("Player 1 Symbol", 0), extras.getString("Player 1 Phone Number"));
+                players[1] = new Player(extras.getString("Player 2 Name"), extras.getInt("Player 2 Symbol",0), extras.getString("Player 2 Phone Number"));
 
             }
         } else {
@@ -52,6 +55,10 @@ public class game_board extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String phoneNumber = players[1].getPhoneNumber();
+                String message = "%$$^ | TTTGame | INVITE | " + players[0].getName();
+                smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+
                 for (int i = 0; i < 9; i++) {
                     tttButton[i].setEnabled(true);
                 }
