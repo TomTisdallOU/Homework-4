@@ -1,11 +1,16 @@
 package com.example.tictactoe;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class game_board extends AppCompatActivity {
@@ -15,7 +20,8 @@ public class game_board extends AppCompatActivity {
     TTTButton[] tttButton = new TTTButton[9];
     Button startOver = null;
     Button cancel = null;
-    Button start = null;
+    Button inviteToPlay = null;
+    EditText phoneNumberText = null;
     SmsManager smsManager = SmsManager.getDefault();
 
 
@@ -34,7 +40,8 @@ public class game_board extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_board);
 
@@ -43,19 +50,21 @@ public class game_board extends AppCompatActivity {
             if(extras == null) {
                 //title= null;
             } else {
-                players[0] = new Player(extras.getString("Player 1 Name"), extras.getInt("Player 1 Symbol", 0), extras.getString("Player 1 Phone Number"));
-                players[1] = new Player(extras.getString("Player 2 Name"), extras.getInt("Player 2 Symbol",0), extras.getString("Player 2 Phone Number"));
+                players[0] = new Player(extras.getString("Player 1 Name"), extras.getInt("Player 1 Symbol",0));
+                players[1] = new Player(extras.getString("Player 2 Name"), extras.getInt("Player 2 Symbol",0));
 
             }
         } else {
-        //    title = (String) savedInstanceState.getSerializable("Title");
+            //    title = (String) savedInstanceState.getSerializable("Title");
         }
 
-        start = findViewById(R.id.start);
-        start.setOnClickListener(new View.OnClickListener() {
+        phoneNumberText = findViewById(R.id.phoneNumberText);
+
+        inviteToPlay = findViewById(R.id.inviteToPlay);
+        inviteToPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber = players[1].getPhoneNumber();
+                String phoneNumber = phoneNumberText.getText().toString();
                 String message = "%$$^ | TTTGame | INVITE | " + players[0].getName();
                 smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 
@@ -89,7 +98,7 @@ public class game_board extends AppCompatActivity {
             }
         });
 
-    TTTButton.OnClickListener myMouse =  new TTTButton.OnClickListener() {
+        TTTButton.OnClickListener myMouse =  new TTTButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TTTButton myButton = findViewById(v.getId());
@@ -118,7 +127,7 @@ public class game_board extends AppCompatActivity {
 
         //TODO Implement game board logic
         //TODO create custom button to track symbol and location
-
+        //TODO use GameBoard.java for reference
         turnLabel = findViewById(R.id.turnLabel);
         turnLabel.setText(players[0].getName() + " your turn!");
 
@@ -130,10 +139,34 @@ public class game_board extends AppCompatActivity {
             tttButton[i].setEnabled(false);
 
 
-        //TODO register player with the button
-                players[0].register(tttButton[i],i);
-                players[1].register(tttButton[i],i);
+            //TODO register player with the button
+            players[0].register(tttButton[i],i);
+            players[1].register(tttButton[i],i);
         }
 
+        SMSReceiver smsReceiver = new SMSReceiver(this);
+        if(!isSmsPermissionGranted())
+            requestReadAndSendSmsPermission();
+
+    }
+
+
+    /** * Check if we have SMS permission */
+    public boolean isSmsPermissionGranted() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /** * Request runtime SMS permission */
+    private void requestReadAndSendSmsPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_SMS)) {
+
+        }
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS,
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.READ_PHONE_STATE}, 1);
     }
 }

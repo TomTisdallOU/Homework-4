@@ -8,38 +8,38 @@
 
 
     <Button
-        android:id="@+id/start"
+        android:id="@+id/inviteToPlay"
 
-        android:layout_width="153dp"
-        android:layout_height="48dp"
+        android:layout_width="151dp"
+        android:layout_height="31dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/buttonshape"
         android:fontFamily="casual"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Start"
+        android:text="Invite To Play"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintEnd_toStartOf="@+id/phoneNumberText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TTTButton8"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.345" />
 
     <Button
         android:id="@+id/cancel"
 
-        android:layout_width="154dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="112dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/buttonshape"
         android:fontFamily="casual"
         android:shadowColor="#A8A8A8"
@@ -48,12 +48,12 @@
         android:shadowRadius="5"
         android:text="Cancel"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/restart"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/restart"
+        app:layout_constraintVertical_bias="1.0" />
 
     <View
         android:id="@+id/view2"
@@ -236,12 +236,11 @@
     <Button
         android:id="@+id/restart"
 
-        android:layout_width="155dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="112dp"
+        android:layout_height="37dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/buttonshape"
         android:fontFamily="casual"
         android:shadowColor="#A8A8A8"
@@ -250,13 +249,24 @@
         android:shadowRadius="5"
         android:text="Restart"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cancel"
+        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/phoneNumberText"
+        android:layout_width="214dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Enter Phone Number"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/inviteToPlay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TTTButton8"
-        app:layout_constraintVertical_bias="0.637" />
+        app:layout_constraintTop_toTopOf="@+id/inviteToPlay" />
 
 </android.support.constraint.ConstraintLayout>

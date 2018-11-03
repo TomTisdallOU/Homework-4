@@ -7,31 +7,14 @@
     tools:context=".player_form">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="166dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="@font/coming_soon"
-        android:text="Invite Number"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/phoneNumber"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView3"
         android:layout_width="91dp"
         android:layout_height="38dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:fontFamily="@font/coming_soon"
         android:text="Symbol"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner"
         app:layout_constraintEnd_toStartOf="@+id/spinner"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,19 +47,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/phoneNumber"
-        android:layout_width="202dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="28dp"
-        android:ems="10"
-        android:hint="Enter opponent phone #"
-        android:inputType="textPersonName"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-    <EditText
         android:id="@+id/nameText"
         android:layout_width="216dp"
         android:layout_height="54dp"
@@ -84,8 +54,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Enter player name"
         android:inputType="textPersonName"
+        android:text="Name"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.421"
@@ -100,10 +70,10 @@
 
         android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
-
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
     <Button
@@ -112,23 +82,22 @@
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
 
-        android:layout_marginTop="8dp"
-
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
+
         android:background="@drawable/buttonshape"
         android:fontFamily="casual"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
-
-
         android:shadowRadius="5"
+
+
         android:text="Next"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 </android.support.constraint.ConstraintLayout>

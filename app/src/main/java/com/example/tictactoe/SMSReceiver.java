@@ -8,13 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 
-public class SMSReceiver extends BroadcastReceiver {
-    game_board activity;
+public class SMSReceiver extends BroadcastReceiver
+{
+    game_board activity = null;
     final IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
 
-
     public SMSReceiver(Context context) {
-      //  activity = (game_board) context;
+        activity = (game_board) context;
         context.registerReceiver(this, intentFilter);
     }
 
@@ -22,23 +22,23 @@ public class SMSReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         SmsMessage currentMessage = null;
-        if (bundle != null)
+
+        if(bundle != null)
         {
-            final Object[] pdusobj = (Object[]) bundle.get("pdus");
+            final Object[] pdusObj = (Object[]) bundle.get("pdus");
 
-            for (int i = 0; i < pdusobj.length; i++) {
+            for (int i = 0; i < pdusObj.length; i++) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
                     String format = bundle.getString("format");
-                    currentMessage = SmsMessage.createFromPdu((byte[]) pdusobj[i], format);
+                    currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i], format);
                 }
                 else {
-                    currentMessage = SmsMessage.createFromPdu((byte[]) pdusobj[i]);
+                    currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
                 }
             }
             String senderNum = currentMessage.getDisplayOriginatingAddress();
             String message = currentMessage.getDisplayMessageBody();
-           // activity.displayMessage(senderNum,message);
+            //activity.displayMessage(senderNum, message);
         }
     }
 }
