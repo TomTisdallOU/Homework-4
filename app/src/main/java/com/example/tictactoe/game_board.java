@@ -118,7 +118,7 @@ public class game_board extends AppCompatActivity {
 
         //TODO Implement game board logic
         //TODO create custom button to track symbol and location
-        //TODO use GameBoard.java for reference
+
         turnLabel = findViewById(R.id.turnLabel);
         turnLabel.setText(players[0].getName() + " your turn!");
 
