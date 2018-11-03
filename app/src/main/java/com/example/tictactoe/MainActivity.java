@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             players[0] = new Player(playerName, symbol, "0");
-            players[0] = new Player("Player2", 0, playerPhoneNumber);
+            players[1] = new Player("Player2", 0, playerPhoneNumber);
 
 
             //TODO get phone number, send invite message to opponent
