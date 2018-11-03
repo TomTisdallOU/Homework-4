@@ -50,8 +50,6 @@ public class SMSReceiver extends BroadcastReceiver
                 switch(tokens[1])
                 {
                     case "INVITE":
-                        // TODO: This context passed in is the game_board. I'm not sure how to pass in the right context. Because the
-                        // TODO: dialog message doesn't show
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setMessage("You are invited by " + ((game_board)activity).players[0].getName() + " to play Tic Tac Toe game. Do you accept this invitation?").setPositiveButton("Yes", dialogClickListener)
                                 .setNegativeButton("No", dialogClickListener).show();

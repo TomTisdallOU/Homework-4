@@ -150,6 +150,8 @@ public class game_board extends AppCompatActivity {
             players[1].register(tttButton[i],i);
         }
 
+        // TODO: This context passed in is the game_board. I'm not sure how to pass in the right context. Because the
+        // TODO: dialog message doesn't show if the 2nd player is still at the welcome screen. If both screens are on the GameBoard screen, it works.
         SMSReceiver smsReceiver = new SMSReceiver(this);
         if(!isSmsPermissionGranted())
             requestReadAndSendSmsPermission();
