@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.view.View;
 
 public class SMSReceiver extends BroadcastReceiver
 {
@@ -61,7 +62,8 @@ public class SMSReceiver extends BroadcastReceiver
                         // Go back to welcome screen
                         break;
                     case "MOVE":
-                        //
+                        //TODO: While in 2nd emulator, you can't click on any of the buttons. Can only do it in the 1 emulator. That's a problem
+                        ((game_board)activity).UpdateBoard(senderNum, Integer.parseInt(tokens[2]));
                         break;
                     default: break;
                 }

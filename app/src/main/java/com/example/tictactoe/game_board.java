@@ -106,10 +106,6 @@ public class game_board extends AppCompatActivity {
                 players[currentPlayer].MarkCell(i);
                 tttButton[i].setButtonImage(players[currentPlayer].getSymbol());
 
-                //String phoneNumber = phoneNumberText.getText().toString();
-                //String message = "TTTGame,MOVE," + Integer.toString(i);
-                //smsManager.sendTextMessage(phoneNumber, null, message, null, null);
-
 
                 if (players[currentPlayer].winner()) {
                     turnLabel.setText(players[currentPlayer].getName() + " Wins!");
@@ -126,6 +122,10 @@ public class game_board extends AppCompatActivity {
 
                     turnLabel.setText(players[currentPlayer].getName() + " your turn!");
                 }
+
+                String phoneNumber = phoneNumberText.getText().toString();
+                String message = "TTTGame,MOVE," + Integer.toString(i);
+                smsManager.sendTextMessage(phoneNumber, null, message, null, null);
             }
         };
 
@@ -176,5 +176,28 @@ public class game_board extends AppCompatActivity {
                 Manifest.permission.SEND_SMS,
                 Manifest.permission.RECEIVE_SMS,
                 Manifest.permission.READ_PHONE_STATE}, 1);
+    }
+
+    public void UpdateBoard(String senderNum, int i)
+    {
+        players[currentPlayer].MarkCell(i);
+        tttButton[i].setButtonImage(players[currentPlayer].getSymbol());
+
+
+        if (players[currentPlayer].winner()) {
+            turnLabel.setText(players[currentPlayer].getName() + " Wins!");
+            startOver.setVisibility(View.VISIBLE);
+
+        }else {
+
+            //TODO if current = 0 set to 1 else 0  -- try figuring out the remainder to track  # moves
+            if (currentPlayer == 1) {
+                currentPlayer = 0;
+            } else {
+                currentPlayer = 1;
+            }
+
+            turnLabel.setText(players[currentPlayer].getName() + " your turn!");
+        }
     }
 }
