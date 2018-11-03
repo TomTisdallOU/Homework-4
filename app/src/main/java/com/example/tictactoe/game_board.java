@@ -65,7 +65,7 @@ public class game_board extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String phoneNumber = phoneNumberText.getText().toString();
-                String message = "%$$^ | TTTGame | INVITE | " + players[0].getName();
+                String message = "TTTGame,INVITE," + players[0].getName();
                 smsManager.sendTextMessage(phoneNumber, null, message, null, null);
 
                 for (int i = 0; i < 9; i++) {
