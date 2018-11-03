@@ -29,26 +29,6 @@ public class SMSReceiver extends BroadcastReceiver
         Bundle bundle = intent.getExtras();
         SmsMessage currentMessage = null;
 
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        //Yes button clicked
-                        String acceptedMessage = "TTTGame,ACCEPTED," + ((game_board)activity).players[1].getName();
-                        smsManager.sendTextMessage(senderNum, null, acceptedMessage, null, null);
-                        // Go to game_board screen
-                        break;
-
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        String deniedMessage = "TTTGame,DENIED," + ((game_board)activity).players[1].getName();
-                        smsManager.sendTextMessage(senderNum, null, deniedMessage, null, null);
-                        break;
-                }
-            }
-        };
-
         if(bundle != null)
         {
             final Object[] pdusObj = (Object[]) bundle.get("pdus");
@@ -91,4 +71,25 @@ public class SMSReceiver extends BroadcastReceiver
             //activity.displayMessage(senderNum, message);
         }
     }
+
+
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    //Yes button clicked
+                    String acceptedMessage = "TTTGame,ACCEPTED," + ((game_board)activity).players[1].getName();
+                    smsManager.sendTextMessage(senderNum, null, acceptedMessage, null, null);
+                    // Go to game_board screen
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    String deniedMessage = "TTTGame,DENIED," + ((game_board)activity).players[1].getName();
+                    smsManager.sendTextMessage(senderNum, null, deniedMessage, null, null);
+                    break;
+            }
+        }
+    };
 }
