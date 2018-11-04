@@ -56,26 +56,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
         if(resultCode== Activity.RESULT_OK){
-            String playerNumber = data.getStringExtra("Title");
+          //  String playerNumber = data.getStringExtra("Title");
             String playerName = data.getStringExtra("PlayerName");
             int symbol = data.getIntExtra("SymbolNumber",0);
-            int player= 0;
-            if(playerNumber.equals("Player 1")){
-                player = 0;
-            }else{
-                player = 1;
-            }
-            players[player] = new Player(playerName, symbol);
+         //   int player= 0;
+         //   if(playerNumber.equals("Player 1")){
+         //       player = 0;
+         //   }else{
+         //       player = 1;
+         //   }
+            players[0] = new Player(playerName, symbol);
+            players[1] = new Player("Second Player", 0);
 
 
             //TODO setup second activity
-            if(player == 0){
-                Intent intent = new Intent(this, player_form.class );
-                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                intent.putExtra("Title", "Player 2");
-                startActivityForResult(intent, 1);
-            }
-            else{
+      //      if(player == 0){
+      //          Intent intent = new Intent(this, player_form.class );
+       //         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+       //         intent.putExtra("Title", "Player 2");
+       //         startActivityForResult(intent, 1);
+       //     }
+      //      else{
                 //Start Game board activity -- pass in player info
                 Intent intent = new Intent(this, game_board.class );
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("Player 2 Symbol",players[1].getSymbol());
 
                 startActivityForResult(intent, 1);
-            }
+       //     }
 
         }
         else if (resultCode == Activity.RESULT_CANCELED){

@@ -2,12 +2,15 @@ package com.example.tictactoe;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,19 +61,17 @@ public class game_board extends AppCompatActivity {
             //    title = (String) savedInstanceState.getSerializable("Title");
         }
 
-        phoneNumberText = findViewById(R.id.phoneNumberText);
+     //   phoneNumberText = findViewById(R.id.phoneNumberText);
 
         inviteToPlay = findViewById(R.id.inviteToPlay);
         inviteToPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber = phoneNumberText.getText().toString();
-                String message = "TTTGame,INVITE," + players[0].getName();
-                smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+                inviteDialog();
+             //   String phoneNumber = phoneNumberText.getText().toString();
 
-                for (int i = 0; i < 9; i++) {
-                    tttButton[i].setEnabled(true);
-                }
+                startGame();
+
             }
         });
 
@@ -199,5 +200,45 @@ public class game_board extends AppCompatActivity {
 
             turnLabel.setText(players[currentPlayer].getName() + " your turn!");
         }
+    }
+
+    public void startGame(){
+        for (int i = 0; i < 9; i++) {
+            tttButton[i].setEnabled(true);
+        }
+        turnLabel.setText(players[currentPlayer].getName());
+    }
+
+    public void inviteDialog(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(game_board.this);
+        builder.setTitle("Please enter phone number of player to invite");
+
+// Set up the input
+        final EditText input = new EditText(game_board.this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                players[1].setPhoneNumber(input.getText().toString());
+                String message = "TTTGame,INVITE," + players[0].getName();
+                smsManager.sendTextMessage(players[1].getPhoneNumber(), null, message, null, null);
+
+                // phoneNumberText =  input.getText().toString();
+             //   setPhoneNumber(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 }

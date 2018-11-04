@@ -21,6 +21,16 @@ public class SMSReceiver extends BroadcastReceiver
 
 
     public SMSReceiver(Context context) {
+
+        if (context instanceof game_board){
+            activity = (game_board) context;
+        } else if (context instanceof  MainActivity){
+            activity = (MainActivity) context;
+        }else{
+            activity = (player_form) context;
+        }
+
+
         activity = context;
         context.registerReceiver(this, intentFilter);
     }
@@ -68,7 +78,7 @@ public class SMSReceiver extends BroadcastReceiver
                     default: break;
                 }
             }
-            //activity.displayMessage(senderNum, message);
+          //  activity.
         }
     }
 
