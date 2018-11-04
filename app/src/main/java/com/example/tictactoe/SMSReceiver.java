@@ -92,9 +92,18 @@ public class SMSReceiver extends BroadcastReceiver
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
                     //Yes button clicked
-                    String acceptedMessage = "TTTGame,ACCEPTED," + ((game_board)activity).players[1].getName();
+
+                    //TT I changed this to player 0, he is in position 0 since he also went through the player setup screen.
+
+                    String acceptedMessage = "TTTGame,ACCEPTED," + ((game_board)activity).players[0].getName();
                     smsManager.sendTextMessage(senderNum, null, acceptedMessage, null, null);
+
+                    //TODO -- I think all of these calls could be pushed to one method in game board
+                    //Setting player 2 (players[1]) as the current player, changing the title to reflect and setting the buttons disabled
                     ((game_board) activity).setPlayer2Info(otherPlayerName, 1, senderNum);
+                    ((game_board) activity).setPlayerTurnTitle(((game_board) activity).players[1].getName());
+                    ((game_board) activity).currentPlayer = 1;
+                    ((game_board) activity).enableButtons(false);
                     // Go to game_board screen
                     break;
 
