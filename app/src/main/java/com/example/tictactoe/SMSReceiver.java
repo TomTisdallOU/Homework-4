@@ -18,6 +18,7 @@ public class SMSReceiver extends BroadcastReceiver
     final IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
     SmsManager smsManager = SmsManager.getDefault();
     String senderNum = null;
+    String otherPlayerName = "";
 
 
     public SMSReceiver(Context context) {
@@ -56,6 +57,7 @@ public class SMSReceiver extends BroadcastReceiver
             senderNum = currentMessage.getDisplayOriginatingAddress();
             String message = currentMessage.getDisplayMessageBody();
             String[] tokens = message.split(",");
+            otherPlayerName = tokens[2];
             if(tokens[0].equals("TTTGame"))
             {
                 switch(tokens[1])
@@ -64,6 +66,7 @@ public class SMSReceiver extends BroadcastReceiver
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setMessage("You are invited by " + ((game_board)activity).players[0].getName() + " to play Tic Tac Toe game. Do you accept this invitation?").setPositiveButton("Yes", dialogClickListener)
                                 .setNegativeButton("No", dialogClickListener).show();
+
                         break;
                     case "ACCEPTED":
                         // Keep playing game. Player 1 makes first move
@@ -91,6 +94,7 @@ public class SMSReceiver extends BroadcastReceiver
                     //Yes button clicked
                     String acceptedMessage = "TTTGame,ACCEPTED," + ((game_board)activity).players[1].getName();
                     smsManager.sendTextMessage(senderNum, null, acceptedMessage, null, null);
+                    ((game_board) activity).setPlayer2Info(otherPlayerName, 1, senderNum);
                     // Go to game_board screen
                     break;
 

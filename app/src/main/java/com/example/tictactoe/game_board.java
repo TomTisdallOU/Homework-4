@@ -51,24 +51,23 @@ public class game_board extends AppCompatActivity {
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
-                //title= null;
+                setPlayerTurnTitle("No player information");
             } else {
                 players[0] = new Player(extras.getString("Player 1 Name"), extras.getInt("Player 1 Symbol",0));
                 players[1] = new Player(extras.getString("Player 2 Name"), extras.getInt("Player 2 Symbol",0));
-
             }
         } else {
-            //    title = (String) savedInstanceState.getSerializable("Title");
+            setPlayerTurnTitle("No player information");
+
         }
 
-     //   phoneNumberText = findViewById(R.id.phoneNumberText);
 
         inviteToPlay = findViewById(R.id.inviteToPlay);
         inviteToPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inviteDialog();
-             //   String phoneNumber = phoneNumberText.getText().toString();
+            setPlayerTurnTitle("Inviting Player 2");
 
                 startGame();
 
@@ -201,12 +200,37 @@ public class game_board extends AppCompatActivity {
             turnLabel.setText(players[currentPlayer].getName() + " your turn!");
         }
     }
+    public void enableButtons (Boolean enable){
+        for (int i = 0; i < 9; i++) {
+            tttButton[i].setEnabled(enable);
+        }
+    }
+
+    //Provided so players can be switched -- enable buttons if this players turn otherwise disable buttons
+    public void changePlayer(){
+        if (currentPlayer == 0){
+            currentPlayer = 1;
+            enableButtons(false);
+        }else{
+            currentPlayer = 1;
+            enableButtons(true);
+        }
+        setPlayerTurnTitle(players[currentPlayer].getName());
+    }
+
+    public void setPlayerTurnTitle(String title){
+        turnLabel.setText("It is " + title + "s turn.");
+    }
 
     public void startGame(){
-        for (int i = 0; i < 9; i++) {
-            tttButton[i].setEnabled(true);
-        }
+        enableButtons(true);
         turnLabel.setText(players[currentPlayer].getName());
+    }
+
+    public void setPlayer2Info(String name, int symbol, String phoneNumber){
+        players[1].setPhoneNumber(phoneNumber);
+        players[1].setName(name);
+        players[1].setSymbol(symbol);
     }
 
     public void inviteDialog(){
