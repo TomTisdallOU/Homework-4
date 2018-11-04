@@ -94,6 +94,8 @@ public class game_board extends AppCompatActivity {
                     tttButton[i].setButtonImage(0);
                 }
                 startOver.setVisibility(View.INVISIBLE);
+
+                //TODO update the label
                 turnLabel.setText(players[currentPlayer].getName() + " your turn!");
             }
         });
@@ -123,7 +125,8 @@ public class game_board extends AppCompatActivity {
                     turnLabel.setText(players[currentPlayer].getName() + " your turn!");
                 }
 
-                String phoneNumber = phoneNumberText.getText().toString();
+          //      String phoneNumber = phoneNumberText.getText().toString();
+                String phoneNumber= players[currentPlayer].getPhoneNumber();
                 String message = "TTTGame,MOVE," + Integer.toString(i);
                 smsManager.sendTextMessage(phoneNumber, null, message, null, null);
             }
@@ -131,11 +134,10 @@ public class game_board extends AppCompatActivity {
 
 
 
-        //TODO Implement game board logic
-        //TODO create custom button to track symbol and location
-        //TODO use GameBoard.java for reference
+
         turnLabel = findViewById(R.id.turnLabel);
-        turnLabel.setText(players[0].getName() + " your turn!");
+        setPlayerTurnTitle("");
+     //   turnLabel.setText(players[0].getName() + " your turn!");
 
         for (int i = 0; i < 9; i++) {
 
@@ -178,6 +180,7 @@ public class game_board extends AppCompatActivity {
                 Manifest.permission.READ_PHONE_STATE}, 1);
     }
 
+    //TODO I think we can change this to use the current player -- and then switch the current player
     public void UpdateBoard(String senderNum, int i)
     {
         players[currentPlayer].MarkCell(i);
@@ -219,6 +222,9 @@ public class game_board extends AppCompatActivity {
     }
 
     public void setPlayerTurnTitle(String title){
+        if (title.length() == 0){
+            turnLabel.setText("Waiting to start game");
+        }else
         turnLabel.setText("It is " + title + "s turn.");
     }
 

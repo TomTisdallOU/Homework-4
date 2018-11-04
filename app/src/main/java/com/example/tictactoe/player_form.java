@@ -29,20 +29,20 @@ public class player_form extends AppCompatActivity {
         spinner = findViewById(R.id.spinner);
         nextButton = findViewById(R.id.nextButton);
 
-        String title = null;
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                title= null;
-            } else {
-                title= extras.getString("Title");
-            }
-        } else {
-            title = (String) savedInstanceState.getSerializable("Title");
-        }
-
-        playerNumber.setText(title);
-        nameText.setText(title);
+     //   String title = null;
+     //   if (savedInstanceState == null) {
+     //       Bundle extras = getIntent().getExtras();
+    //        if(extras == null) {
+    //            title= null;
+    //        } else {
+    //            title= extras.getString("Title");
+    //        }
+    //    } else {
+    //        title = (String) savedInstanceState.getSerializable("Title");
+    //    }
+        playerNumber.setText("Player Information");
+      //  playerNumber.setText(title);
+        nameText.setText("Player");
 
         //Set up Spinner
         spinnerSymbolNames = new String[] {"Red Dragon", "Black Dragon", "Blue Dragon",

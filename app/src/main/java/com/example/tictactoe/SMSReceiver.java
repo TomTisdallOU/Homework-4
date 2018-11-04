@@ -69,6 +69,7 @@ public class SMSReceiver extends BroadcastReceiver
 
                         break;
                     case "ACCEPTED":
+                        //TODO show that player 2 accepted the invite -- maybe via a dialog
                         // Keep playing game. Player 1 makes first move
                         break;
                     case "DENIED":
