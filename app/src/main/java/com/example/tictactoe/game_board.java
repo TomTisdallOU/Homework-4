@@ -121,6 +121,8 @@ public class game_board extends AppCompatActivity {
                         currentPlayer = 0;
                     } else {
                         currentPlayer = 1;
+                        //other players turn, dont want to be able to click buttons
+                        enableButtons(false);
                     }
 
                     turnLabel.setText(players[currentPlayer].getName() + " your turn!");
