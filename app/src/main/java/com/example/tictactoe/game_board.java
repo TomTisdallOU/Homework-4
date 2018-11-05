@@ -112,6 +112,7 @@ public class game_board extends AppCompatActivity {
                 if (players[currentPlayer].winner()) {
                     turnLabel.setText(players[currentPlayer].getName() + " Wins!");
                     startOver.setVisibility(View.VISIBLE);
+                    return;
 
                 }else {
 
@@ -194,15 +195,17 @@ public class game_board extends AppCompatActivity {
         }else {
 
             //TODO if current = 0 set to 1 else 0  -- try figuring out the remainder to track  # moves
+           // changePlayer();
             if (currentPlayer == 1) {
                 currentPlayer = 0;
             } else {
                 currentPlayer = 1;
-            }
+           }
 
             turnLabel.setText(players[currentPlayer].getName() + " your turn!");
         }
     }
+
     public void enableButtons (Boolean enable){
         for (int i = 0; i < 9; i++) {
             tttButton[i].setEnabled(enable);
@@ -215,7 +218,7 @@ public class game_board extends AppCompatActivity {
             currentPlayer = 1;
             enableButtons(false);
         }else{
-            currentPlayer = 1;
+            currentPlayer = 0;
             enableButtons(true);
         }
         setPlayerTurnTitle(players[currentPlayer].getName());

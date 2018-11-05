@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
          //       player = 1;
          //   }
             players[0] = new Player(playerName, symbol);
-            players[1] = new Player("Second Player", 0);
+            players[1] = new Player("Second Player", getResources().getIdentifier("black_dragon", "drawable", getPackageName()));
 
 
             //TODO setup second activity

@@ -56,6 +56,7 @@ public class SMSReceiver extends BroadcastReceiver
             }
             senderNum = currentMessage.getDisplayOriginatingAddress();
             String message = currentMessage.getDisplayMessageBody();
+            ((game_board)activity).players[0].setPhoneNumber(senderNum);
             String[] tokens = message.split(",");
             otherPlayerName = tokens[2];
             if(tokens[0].equals("TTTGame"))
@@ -76,7 +77,6 @@ public class SMSReceiver extends BroadcastReceiver
                         // Go back to welcome screen
                         break;
                     case "MOVE":
-                        //TODO: While in 2nd emulator, you can't click on any of the buttons. Can only do it in the 1 emulator. That's a problem
                         ((game_board)activity).UpdateBoard(senderNum, Integer.parseInt(tokens[2]));
                         break;
                     default: break;
@@ -101,10 +101,10 @@ public class SMSReceiver extends BroadcastReceiver
 
                     //TODO -- I think all of these calls could be pushed to one method in game board
                     //Setting player 2 (players[1]) as the current player, changing the title to reflect and setting the buttons disabled
-                    ((game_board) activity).setPlayer2Info(otherPlayerName, 1, senderNum);
-                    ((game_board) activity).setPlayerTurnTitle(((game_board) activity).players[1].getName());
-                    ((game_board) activity).currentPlayer = 1;
-                    ((game_board) activity).enableButtons(false);
+                    //((game_board) activity).setPlayer2Info(otherPlayerName, 1, senderNum);
+                    ((game_board) activity).setPlayerTurnTitle(((game_board) activity).players[0].getName());
+                    ((game_board) activity).currentPlayer = 0;
+                    ((game_board) activity).enableButtons(true);
                     // Go to game_board screen
                     break;
 
