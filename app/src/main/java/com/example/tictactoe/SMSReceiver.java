@@ -77,6 +77,7 @@ public class SMSReceiver extends BroadcastReceiver
                         // Go back to welcome screen
                         break;
                     case "MOVE":
+                        ((game_board)activity).enableButtons(true);
                         ((game_board)activity).UpdateBoard(senderNum, Integer.parseInt(tokens[2]));
                         break;
                     default: break;
@@ -104,7 +105,7 @@ public class SMSReceiver extends BroadcastReceiver
                     //((game_board) activity).setPlayer2Info(otherPlayerName, 1, senderNum);
                     ((game_board) activity).setPlayerTurnTitle(((game_board) activity).players[0].getName());
                     ((game_board) activity).currentPlayer = 0;
-                    ((game_board) activity).enableButtons(true);
+                    ((game_board) activity).enableButtons(false);
                     // Go to game_board screen
                     break;
 

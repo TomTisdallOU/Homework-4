@@ -112,6 +112,14 @@ public class game_board extends AppCompatActivity {
                 if (players[currentPlayer].winner()) {
                     turnLabel.setText(players[currentPlayer].getName() + " Wins!");
                     startOver.setVisibility(View.VISIBLE);
+                    if (currentPlayer == 1) {
+                        currentPlayer = 0;
+                    } else {
+                        currentPlayer = 1;
+                    }
+                    String phoneNumber= players[currentPlayer].getPhoneNumber();
+                    String message = "TTTGame,MOVE," + Integer.toString(i);
+                    smsManager.sendTextMessage(phoneNumber, null, message, null, null);
                     return;
 
                 }else {
@@ -121,9 +129,9 @@ public class game_board extends AppCompatActivity {
                         currentPlayer = 0;
                     } else {
                         currentPlayer = 1;
-                        //other players turn, dont want to be able to click buttons
-                        enableButtons(false);
                     }
+
+                    enableButtons(false);
 
                     turnLabel.setText(players[currentPlayer].getName() + " your turn!");
                 }
@@ -200,6 +208,7 @@ public class game_board extends AppCompatActivity {
            // changePlayer();
             if (currentPlayer == 1) {
                 currentPlayer = 0;
+                enableButtons(true);
             } else {
                 currentPlayer = 1;
            }
@@ -235,7 +244,7 @@ public class game_board extends AppCompatActivity {
 
     public void startGame(){
         enableButtons(true);
-        turnLabel.setText(players[currentPlayer].getName());
+        turnLabel.setText("It is " + players[0].getName() + "s turn.");
     }
 
     public void setPlayer2Info(String name, int symbol, String phoneNumber){
