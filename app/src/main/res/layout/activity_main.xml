@@ -32,7 +32,7 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Start Game"
+        android:text="Continue"
         android:textColor="#FFFFFF"
 
 
