@@ -29,10 +29,6 @@ public class game_board extends AppCompatActivity
     EditText phoneNumberText = null;
     SmsManager smsManager = SmsManager.getDefault();
 
-
-
-
-
     private static final int[] BUTTON_IDS = {
             R.id.TTTButton1,
             R.id.TTTButton2,
@@ -56,13 +52,13 @@ public class game_board extends AppCompatActivity
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
-                setPlayerTurnTitle("No player information");
+                turnLabel.setText("No player information");
             } else {
                 players[0] = new Player(extras.getString("Player 1 Name"), extras.getInt("Player 1 Symbol",0));
                 players[1] = new Player(extras.getString("Player 2 Name"), extras.getInt("Player 2 Symbol",0));
             }
         } else {
-            setPlayerTurnTitle("No player information");
+            turnLabel.setText("No player information");
 
         }
 
@@ -71,10 +67,10 @@ public class game_board extends AppCompatActivity
         inviteToPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                turnLabel.setText("Inviting player 2.");
                 inviteDialog();
-            setPlayerTurnTitle("Inviting Player 2");
-
-                startGame();
+       //TT remove the start game from here - wait for accept to be returned
+                //         startGame();
 
             }
         });
@@ -101,7 +97,7 @@ public class game_board extends AppCompatActivity
                 startOver.setVisibility(View.INVISIBLE);
 
                 //TODO update the label
-                turnLabel.setText(players[currentPlayer].getName() + " your turn!");
+                turnLabel.setText("It is " + players[currentPlayer].getName() + " turn!");
             }
         });
 
@@ -115,6 +111,8 @@ public class game_board extends AppCompatActivity
 
 
                 if (players[currentPlayer].winner()) {
+
+
                     turnLabel.setText(players[currentPlayer].getName() + " Wins!");
                     startOver.setVisibility(View.VISIBLE);
                     if (currentPlayer == 1) {
@@ -125,20 +123,23 @@ public class game_board extends AppCompatActivity
                     String phoneNumber= players[currentPlayer].getPhoneNumber();
                     String message = "TTTGame,MOVE," + Integer.toString(i);
                     smsManager.sendTextMessage(phoneNumber, null, message, null, null);
+
+
                     return;
 
                 }else {
 
                     //TODO if current = 0 set to 1 else 0  -- try figuring out the remainder to track  # moves
-                    if (currentPlayer == 1) {
-                        currentPlayer = 0;
-                    } else {
-                        currentPlayer = 1;
-                    }
+                    changePlayer();
+                 //   if (currentPlayer == 1) {
+                //        currentPlayer = 0;
+                //    } else {
+                //        currentPlayer = 1;
+                //    }
 
-                    enableButtons(false);
+                //    enableButtons(false);
 
-                    turnLabel.setText(players[currentPlayer].getName() + " your turn!");
+                 //   turnLabel.setText(players[currentPlayer].getName() + " your turn!");
                 }
 
           //      String phoneNumber = phoneNumberText.getText().toString();
@@ -152,8 +153,9 @@ public class game_board extends AppCompatActivity
 
 
         turnLabel = findViewById(R.id.turnLabel);
-        setPlayerTurnTitle("");
-     //   turnLabel.setText(players[0].getName() + " your turn!");
+      //  setPlayerTurnTitle("");
+       // turnLabel.setText("It is" +  players[0].getName() + " turn.");
+        turnLabel.setText("Waiting to start game.");
 
         for (int i = 0; i < 9; i++) {
 
@@ -210,13 +212,14 @@ public class game_board extends AppCompatActivity
         }else {
 
             //TODO if current = 0 set to 1 else 0  -- try figuring out the remainder to track  # moves
-           // changePlayer();
-            if (currentPlayer == 1) {
-                currentPlayer = 0;
-                enableButtons(true);
-            } else {
-                currentPlayer = 1;
-           }
+            changePlayer();
+      //      if (currentPlayer == 1) {
+      //          currentPlayer = 0;
+      //          enableButtons(true);
+      //      } else {
+      //          currentPlayer = 1;
+      //          enableButtons(false);
+      //     }
 
             turnLabel.setText(players[currentPlayer].getName() + " your turn!");
         }
@@ -237,21 +240,24 @@ public class game_board extends AppCompatActivity
             currentPlayer = 0;
             enableButtons(true);
         }
-        setPlayerTurnTitle(players[currentPlayer].getName());
+       // setPlayerTurnTitle(players[currentPlayer].getName());
+        turnLabel.setText("It is" + players[currentPlayer].getName() + " turn");
     }
 
-    public void setPlayerTurnTitle(String title){
-        if (title.length() == 0){
-            turnLabel.setText("Waiting to start game");
-        }else
-        turnLabel.setText("It is " + title + "s turn.");
-    }
+  //  public void setPlayerTurnTitle(String title){
+  //      if (title.length() == 0){
+  //          turnLabel.setText("Waiting to start game");
+  //      }else
+  //      turnLabel.setText("It is " + title + "s turn.");
+  //  }
 
-    public void startGame(){
-        enableButtons(true);
-        turnLabel.setText("It is " + players[0].getName() + "s turn.");
-    }
+//    public void startGame(){
+//        enableButtons(true);
+//        turnLabel.setText("It is " + players[0].getName() + "s turn.");
+//    }
 
+
+    //TODO clean this up -- player 2 gets set up in different places
     public void setPlayer2Info(String name, int symbol, String phoneNumber){
         players[1].setPhoneNumber(phoneNumber);
         players[1].setName(name);
@@ -292,18 +298,44 @@ public class game_board extends AppCompatActivity
     }
 
     @Override
-    public void gameMessageReceived(String action, String msg) {
+    public void gameMessageReceived(String action, String msg, String senderNumber) {
         String message = msg;
 
-        if (action == "Invite"){
+
+        switch (action)
+        {
+      //  if (action == "Invite"){
+            case "Invite":
             DialogFragment fragment = new Fragment();
+            ((Fragment) fragment).setOtherPlayerName(msg);
+            players[1].setName(msg);
+            players[1].setPhoneNumber(senderNumber);
             fragment.show(getSupportFragmentManager(), "inviteFragment");
+
+            break;
+            case "Accepted":
+                players[1].setName(msg);
+                turnLabel.setText("It is your turn");
+                enableButtons(true);
+             //   startGame();
         }
     }
 
     @Override
     public void onDialogPositiveClick() {
-        String test = "";
+
+        String acceptedMessage = "TTTGame,ACCEPTED," + players[0].getName();
+        smsManager.sendTextMessage(players[1].getPhoneNumber(), null, acceptedMessage, null, null);
+
+        //TODO -- I think all of these calls could be pushed to one method in game board
+        //Setting player 2 (players[1]) as the current player, changing the title to reflect and setting the buttons disabled
+        //((game_board) activity).setPlayer2Info(otherPlayerName, 1, senderNum);
+        //setPlayerTurnTitle(players[0].getName());
+      //  turnLabel.setText("It is " + players[0] + " turn.");
+        currentPlayer = 1;
+        turnLabel.setText("It is " + players[1].getName() + " turn.");
+        enableButtons(false);
+
         //TODO START THE GAME
     }
 

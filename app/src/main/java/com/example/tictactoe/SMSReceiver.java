@@ -16,7 +16,7 @@ public class SMSReceiver extends BroadcastReceiver
 {
 
     public interface SMSReceiverListener {
-        public void gameMessageReceived(String action, String msg);
+        public void gameMessageReceived(String action, String msg, String phoneNumber);
     }
 
     Context activity = null;
@@ -71,7 +71,10 @@ public class SMSReceiver extends BroadcastReceiver
             }
             senderNum = currentMessage.getDisplayOriginatingAddress();
             String message = currentMessage.getDisplayMessageBody();
-            ((game_board)activity).players[0].setPhoneNumber(senderNum);
+
+            //TODO move this to gameboard - it should be player 1 that gets the # set  player 0 is this player
+
+          //  ((game_board)activity).players[1].setPhoneNumber(senderNum);
             String[] tokens = message.split(",");
             otherPlayerName = tokens[2];
             if(tokens[0].equals("TTTGame"))
@@ -81,16 +84,17 @@ public class SMSReceiver extends BroadcastReceiver
                     case "INVITE":
 
                         //TODO Broadcast the invite
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setMessage("You are invited by " + ((game_board)activity).players[0].getName() + " to play Tic Tac Toe game. Do you accept this invitation?").setPositiveButton("Yes", dialogClickListener)
-                                .setNegativeButton("No", dialogClickListener).show();
+       //                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
+       //                 builder.setMessage("You are invited by " + ((game_board)activity).players[0].getName() + " to play Tic Tac Toe game. Do you accept this invitation?").setPositiveButton("Yes", dialogClickListener)
+       //                         .setNegativeButton("No", dialogClickListener).show();
 
-                        mListener.gameMessageReceived("Invite", tokens[2]);
+                        mListener.gameMessageReceived("Invite", tokens[2], senderNum);
 
                         break;
                     case "ACCEPTED":
                         //TODO show that player 2 accepted the invite -- maybe via a dialog
                         // Keep playing game. Player 1 makes first move
+                        mListener.gameMessageReceived("Accepted", tokens[2], null);
                         break;
                     case "DENIED":
                         // Go back to welcome screen
@@ -124,9 +128,9 @@ public class SMSReceiver extends BroadcastReceiver
                     //TODO -- I think all of these calls could be pushed to one method in game board
                     //Setting player 2 (players[1]) as the current player, changing the title to reflect and setting the buttons disabled
                     //((game_board) activity).setPlayer2Info(otherPlayerName, 1, senderNum);
-                    ((game_board) activity).setPlayerTurnTitle(((game_board) activity).players[0].getName());
-                    ((game_board) activity).currentPlayer = 0;
-                    ((game_board) activity).enableButtons(false);
+              //      ((game_board) activity).setPlayerTurnTitle(((game_board) activity).players[0].getName());
+              //      ((game_board) activity).currentPlayer = 0;
+               //     ((game_board) activity).enableButtons(false);
                     // Go to game_board screen
                     break;
 
