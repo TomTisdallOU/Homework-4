@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class game_board extends AppCompatActivity
                                 implements SMSReceiver.SMSReceiverListener, Fragment.NoticeDialogListener{
     int currentPlayer = 0;
@@ -28,6 +31,9 @@ public class game_board extends AppCompatActivity
     Button inviteToPlay = null;
     EditText phoneNumberText = null;
     SmsManager smsManager = SmsManager.getDefault();
+    Timer timer = null;
+    int seconds = 0;
+    int minutes = 0;
 
     private static final int[] BUTTON_IDS = {
             R.id.TTTButton1,
@@ -104,6 +110,8 @@ public class game_board extends AppCompatActivity
         TTTButton.OnClickListener myMouse =  new TTTButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+                seconds = 0;
+                minutes = 0;
                 TTTButton myButton = findViewById(v.getId());
                 int i = myButton.getButtonPosition();
                 players[currentPlayer].MarkCell(i);
@@ -317,6 +325,7 @@ public class game_board extends AppCompatActivity
                 players[1].setName(msg);
                 turnLabel.setText("It is your turn");
                 enableButtons(true);
+                startTimer();
              //   startGame();
         }
     }
@@ -344,5 +353,31 @@ public class game_board extends AppCompatActivity
         //TODO Say he declined
     }
 
+    public void startTimer(){
+        timer = new Timer();
+
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView tv = findViewById(R.id.viewTimer);
+                        tv.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
+                        seconds += 1;
+                        if(seconds == 60){
+                            minutes += 1;
+                            seconds = 0;
+
+                        }
+
+                    }
+                });
+            }
+        }, 0, 1000);
+
+
+
+    }
 
 }
