@@ -16,7 +16,7 @@ public class SMSReceiver extends BroadcastReceiver
 {
 
     public interface SMSReceiverListener {
-        public void gameMessageReceived(String msg);
+        public void gameMessageReceived(String action, String msg);
     }
 
     Context activity = null;
@@ -85,7 +85,7 @@ public class SMSReceiver extends BroadcastReceiver
                         builder.setMessage("You are invited by " + ((game_board)activity).players[0].getName() + " to play Tic Tac Toe game. Do you accept this invitation?").setPositiveButton("Yes", dialogClickListener)
                                 .setNegativeButton("No", dialogClickListener).show();
 
-                        mListener.gameMessageReceived("Invite Received");
+                        mListener.gameMessageReceived("Invite", tokens[2]);
 
                         break;
                     case "ACCEPTED":

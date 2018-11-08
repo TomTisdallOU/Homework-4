@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class game_board extends AppCompatActivity
-                                implements SMSReceiver.SMSReceiverListener{
+                                implements SMSReceiver.SMSReceiverListener, Fragment.NoticeDialogListener{
     int currentPlayer = 0;
     Player[] players = new Player[2];
     TextView turnLabel = null;
@@ -291,9 +292,25 @@ public class game_board extends AppCompatActivity
     }
 
     @Override
-    public void gameMessageReceived(String msg) {
+    public void gameMessageReceived(String action, String msg) {
         String message = msg;
+
+        if (action == "Invite"){
+            DialogFragment fragment = new Fragment();
+            fragment.show(getSupportFragmentManager(), "inviteFragment");
+        }
     }
 
-    //TODO register a reciever -- listen for move
+    @Override
+    public void onDialogPositiveClick() {
+        String test = "";
+        //TODO START THE GAME
+    }
+
+    @Override
+    public void onDialogNegativeClick() {
+        //TODO Say he declined
+    }
+
+
 }
