@@ -16,7 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class game_board extends AppCompatActivity {
+public class game_board extends AppCompatActivity
+                                implements SMSReceiver.SMSReceiverListener{
     int currentPlayer = 0;
     Player[] players = new Player[2];
     TextView turnLabel = null;
@@ -26,6 +27,9 @@ public class game_board extends AppCompatActivity {
     Button inviteToPlay = null;
     EditText phoneNumberText = null;
     SmsManager smsManager = SmsManager.getDefault();
+
+
+
 
 
     private static final int[] BUTTON_IDS = {
@@ -285,4 +289,11 @@ public class game_board extends AppCompatActivity {
 
         builder.show();
     }
+
+    @Override
+    public void gameMessageReceived(String msg) {
+        String message = msg;
+    }
+
+    //TODO register a reciever -- listen for move
 }

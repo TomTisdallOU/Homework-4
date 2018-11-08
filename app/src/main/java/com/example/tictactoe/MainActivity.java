@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
         //  String firstName = null;
     }
+//TODO listen for invite -- show toast?
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){

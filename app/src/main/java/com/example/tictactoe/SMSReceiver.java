@@ -14,11 +14,17 @@ import android.view.View;
 
 public class SMSReceiver extends BroadcastReceiver
 {
+
+    public interface SMSReceiverListener {
+        public void gameMessageReceived(String msg);
+    }
+
     Context activity = null;
     final IntentFilter intentFilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
     SmsManager smsManager = SmsManager.getDefault();
     String senderNum = null;
     String otherPlayerName = "";
+    SMSReceiverListener mListener;
 
 
     public SMSReceiver(Context context) {
@@ -31,15 +37,24 @@ public class SMSReceiver extends BroadcastReceiver
             activity = (player_form) context;
         }
 
+        try{
+            mListener = (SMSReceiverListener) context;
+        }catch (ClassCastException e) {
+            throw new ClassCastException();
+        }
+
 
         activity = context;
         context.registerReceiver(this, intentFilter);
     }
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         SmsMessage currentMessage = null;
+
+
 
         if(bundle != null)
         {
@@ -64,9 +79,13 @@ public class SMSReceiver extends BroadcastReceiver
                 switch(tokens[1])
                 {
                     case "INVITE":
+
+                        //TODO Broadcast the invite
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setMessage("You are invited by " + ((game_board)activity).players[0].getName() + " to play Tic Tac Toe game. Do you accept this invitation?").setPositiveButton("Yes", dialogClickListener)
                                 .setNegativeButton("No", dialogClickListener).show();
+
+                        mListener.gameMessageReceived("Invite Received");
 
                         break;
                     case "ACCEPTED":
@@ -77,6 +96,8 @@ public class SMSReceiver extends BroadcastReceiver
                         // Go back to welcome screen
                         break;
                     case "MOVE":
+
+                        //Broadcast the move
                         ((game_board)activity).enableButtons(true);
                         ((game_board)activity).UpdateBoard(senderNum, Integer.parseInt(tokens[2]));
                         break;
