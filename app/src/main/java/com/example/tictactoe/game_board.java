@@ -128,6 +128,7 @@ public class game_board extends AppCompatActivity
                     } else {
                         currentPlayer = 1;
                     }
+                    timer.cancel();
                     String phoneNumber= players[currentPlayer].getPhoneNumber();
                     String message = "TTTGame,MOVE," + Integer.toString(i);
                     smsManager.sendTextMessage(phoneNumber, null, message, null, null);
@@ -249,20 +250,9 @@ public class game_board extends AppCompatActivity
             enableButtons(true);
         }
        // setPlayerTurnTitle(players[currentPlayer].getName());
-        turnLabel.setText("It is" + players[currentPlayer].getName() + " turn");
+        turnLabel.setText("It is " + players[currentPlayer].getName() + " turn");
     }
 
-  //  public void setPlayerTurnTitle(String title){
-  //      if (title.length() == 0){
-  //          turnLabel.setText("Waiting to start game");
-  //      }else
-  //      turnLabel.setText("It is " + title + "s turn.");
-  //  }
-
-//    public void startGame(){
-//        enableButtons(true);
-//        turnLabel.setText("It is " + players[0].getName() + "s turn.");
-//    }
 
 
     //TODO clean this up -- player 2 gets set up in different places
@@ -326,7 +316,15 @@ public class game_board extends AppCompatActivity
                 turnLabel.setText("It is your turn");
                 enableButtons(true);
                 startTimer();
-             //   startGame();
+                break;
+
+            case "Move":
+
+
+                UpdateBoard(senderNumber, Integer.parseInt(msg));
+                enableButtons(true);
+                startTimer();
+                break;
         }
     }
 
@@ -344,7 +342,7 @@ public class game_board extends AppCompatActivity
         currentPlayer = 1;
         turnLabel.setText("It is " + players[1].getName() + " turn.");
         enableButtons(false);
-
+        startTimer();
         //TODO START THE GAME
     }
 

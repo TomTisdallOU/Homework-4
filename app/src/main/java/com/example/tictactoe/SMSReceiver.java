@@ -100,10 +100,10 @@ public class SMSReceiver extends BroadcastReceiver
                         // Go back to welcome screen
                         break;
                     case "MOVE":
-
+                        mListener.gameMessageReceived("Move", tokens[2], senderNum);
                         //Broadcast the move
-                        ((game_board)activity).enableButtons(true);
-                        ((game_board)activity).UpdateBoard(senderNum, Integer.parseInt(tokens[2]));
+                     //   ((game_board)activity).enableButtons(true);
+                     //   ((game_board)activity).UpdateBoard(senderNum, Integer.parseInt(tokens[2]));
                         break;
                     default: break;
                 }
