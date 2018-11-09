@@ -2,6 +2,7 @@ package com.example.tictactoe;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -63,9 +64,6 @@ public class game_board extends AppCompatActivity
                 players[1] = new Player(extras.getString("Player 2 Name"), extras.getInt("Player 2 Symbol",0));
                 boolean acceptedInvite = extras.getBoolean("AcceptedInvite");
                 if(acceptedInvite){
-                    currentPlayer = 1;
-                    turnLabel.setText("It is " + players[1].getName() + " turn.");
-                    enableButtons(false);
                     startTimer();
 
                 }
@@ -146,16 +144,16 @@ public class game_board extends AppCompatActivity
                 }else {
 
                     //TODO if current = 0 set to 1 else 0  -- try figuring out the remainder to track  # moves
-                    changePlayer();
-                 //   if (currentPlayer == 1) {
-                //        currentPlayer = 0;
-                //    } else {
-                //        currentPlayer = 1;
-                //    }
+                   // changePlayer();
+                   if (currentPlayer == 1) {
+                       currentPlayer = 0;
+                   } else {
+                       currentPlayer = 1;
+                    }
 
-                //    enableButtons(false);
+                    enableButtons(false);
 
-                 //   turnLabel.setText(players[currentPlayer].getName() + " your turn!");
+                    turnLabel.setText(players[currentPlayer].getName() + " your turn!");
                 }
 
           //      String phoneNumber = phoneNumberText.getText().toString();
@@ -228,14 +226,14 @@ public class game_board extends AppCompatActivity
         }else {
 
             //TODO if current = 0 set to 1 else 0  -- try figuring out the remainder to track  # moves
-            changePlayer();
-      //      if (currentPlayer == 1) {
-      //          currentPlayer = 0;
+            //changePlayer();
+            if (currentPlayer == 1) {
+                currentPlayer = 0;
       //          enableButtons(true);
-      //      } else {
-      //          currentPlayer = 1;
+            } else {
+                currentPlayer = 1;
       //          enableButtons(false);
-      //     }
+           }
 
             turnLabel.setText(players[currentPlayer].getName() + " your turn!");
         }
@@ -313,13 +311,11 @@ public class game_board extends AppCompatActivity
             case "Invite":
             DialogFragment fragment = new Fragment();
             ((Fragment) fragment).setOtherPlayerName(msg);
-            players[1].setName(msg);
             players[1].setPhoneNumber(senderNumber);
             fragment.show(getSupportFragmentManager(), "inviteFragment");
 
             break;
             case "Accepted":
-                players[1].setName(msg);
                 turnLabel.setText("It is your turn");
                 enableButtons(true);
                 startTimer();
@@ -327,6 +323,8 @@ public class game_board extends AppCompatActivity
 
             case "Move":
 
+                if(senderNumber != players[0].getPhoneNumber())
+                    players[0].setPhoneNumber(senderNumber);
 
                 UpdateBoard(senderNumber, Integer.parseInt(msg));
                 enableButtons(true);
@@ -350,7 +348,8 @@ public class game_board extends AppCompatActivity
         turnLabel.setText("It is " + players[1].getName() + " turn.");
         enableButtons(false);
         startTimer();
-        //TODO START THE GAME
+        Intent intent = new Intent(this, game_board.class);
+        startActivity(intent);
     }
 
     @Override

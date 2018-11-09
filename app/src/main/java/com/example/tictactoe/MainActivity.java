@@ -107,8 +107,8 @@ public class MainActivity extends AppCompatActivity implements SMSReceiver.SMSRe
             ((Fragment) fragment).setOtherPlayerName(msg);
 
 
-            players[0] = new Player("Player 2", getResources().getIdentifier("red_dragon", "drawable", getPackageName()));
-            players[1] = new Player(msg, getResources().getIdentifier("black_dragon", "drawable", getPackageName()));
+            players[0] = new Player(msg, getResources().getIdentifier("red_dragon", "drawable", getPackageName()));
+            players[1] = new Player("Player 2", getResources().getIdentifier("black_dragon", "drawable", getPackageName()));
             players[1].setPhoneNumber(senderNumber);
 
 

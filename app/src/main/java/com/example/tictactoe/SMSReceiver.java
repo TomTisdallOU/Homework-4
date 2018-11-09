@@ -74,7 +74,7 @@ public class SMSReceiver extends BroadcastReceiver
 
             //TODO move this to gameboard - it should be player 1 that gets the # set  player 0 is this player
 
-          //  ((game_board)activity).players[1].setPhoneNumber(senderNum);
+            //((MainActivity)activity).players[0].setPhoneNumber(senderNum);
             String[] tokens = message.split(",");
             otherPlayerName = tokens[2];
             if(tokens[0].equals("TTTGame"))
@@ -121,7 +121,7 @@ public class SMSReceiver extends BroadcastReceiver
                     //Yes button clicked
 
                     //TT I changed this to player 0, he is in position 0 since he also went through the player setup screen.
-
+                    ((game_board)activity).players[0].setPhoneNumber(senderNum);
                     String acceptedMessage = "TTTGame,ACCEPTED," + ((game_board)activity).players[0].getName();
                     smsManager.sendTextMessage(senderNum, null, acceptedMessage, null, null);
 
