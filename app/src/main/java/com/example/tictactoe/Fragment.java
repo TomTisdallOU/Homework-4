@@ -44,7 +44,7 @@ public class Fragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(otherPlayerName + "You were invited to play, click Accept to enter the game.");
+        builder.setTitle(otherPlayerName + " invited you to play tic tac toe. Do you want to play?");
 
 
 

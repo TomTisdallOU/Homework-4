@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements SMSReceiver.SMSRe
          //       player = 1;
          //   }
             players[0] = new Player(playerName, symbol);
-            players[1] = new Player("Second Player", getResources().getIdentifier("black_dragon", "drawable", getPackageName()));
+            players[1] = new Player("Player 2", getResources().getIdentifier("black_dragon", "drawable", getPackageName()));
 
 
             //TODO setup second activity
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements SMSReceiver.SMSRe
 
             players[0] = new Player(msg, getResources().getIdentifier("red_dragon", "drawable", getPackageName()));
             players[1] = new Player("Player 2", getResources().getIdentifier("black_dragon", "drawable", getPackageName()));
-            players[1].setPhoneNumber(senderNumber);
+            players[0].setPhoneNumber(senderNumber);
 
 
             fragment.show(getSupportFragmentManager(), "inviteFragment");
@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements SMSReceiver.SMSRe
     @Override
     public void onDialogPositiveClick() {
 
-        String acceptedMessage = "TTTGame,ACCEPTED," + players[0].getName();
-        smsManager.sendTextMessage(players[1].getPhoneNumber(), null, acceptedMessage, null, null);
+        String acceptedMessage = "TTTGame,ACCEPTED," + players[1].getName();
+        smsManager.sendTextMessage(players[0].getPhoneNumber(), null, acceptedMessage, null, null);
         startBoard(true);
     }
 
