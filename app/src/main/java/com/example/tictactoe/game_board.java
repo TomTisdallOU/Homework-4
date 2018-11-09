@@ -1,7 +1,6 @@
 package com.example.tictactoe;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -62,6 +61,14 @@ public class game_board extends AppCompatActivity
             } else {
                 players[0] = new Player(extras.getString("Player 1 Name"), extras.getInt("Player 1 Symbol",0));
                 players[1] = new Player(extras.getString("Player 2 Name"), extras.getInt("Player 2 Symbol",0));
+                boolean acceptedInvite = extras.getBoolean("AcceptedInvite");
+                if(acceptedInvite){
+                    currentPlayer = 1;
+                    turnLabel.setText("It is " + players[1].getName() + " turn.");
+                    enableButtons(false);
+                    startTimer();
+
+                }
             }
         } else {
             turnLabel.setText("No player information");
